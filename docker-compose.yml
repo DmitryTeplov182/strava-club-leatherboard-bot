@@ -49,6 +49,22 @@ services:
     env_file:
       - ./envs/erevan.env
 
+
+  batumi_stats_gen:
+    <<: *common-settings
+    container_name: batumi_stats_gen
+    command: sh -c "python main.py && sleep 3600"
+    env_file:
+      - ./envs/batumi.env
+
+  erevan_bot:
+    <<: *common-settings
+    container_name: batumi_bot
+    command: python tg.py
+    env_file:
+      - ./envs/batumi.env
+
+
 networks:
   custom_network:
     driver: bridge
