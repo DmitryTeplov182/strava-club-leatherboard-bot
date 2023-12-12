@@ -64,7 +64,7 @@ bot = telebot.TeleBot(bot_token)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     try:
-        bot.reply_to(message, "Hello! This Strava club weekly top bot. Use /weektop or inline mode. PM @iceflame if you need.")
+        bot.reply_to(message, "Hello! This Strava club weekly top bot. Use /weektop or inline mode. PM @iceflame if you need.\n\n [Source](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot")
     except Exception as e:
         print(f"Error in send_welcome: {e}")
         raise
