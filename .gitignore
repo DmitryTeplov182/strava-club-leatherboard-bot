@@ -1,6 +1,6 @@
-cookies/*
-envs/*
-jsons/*
+cookies/*.cookies
+envs/*.env
+jsons/*.json
 __init__.py
 
 # Byte-compiled / optimized / DLL files
