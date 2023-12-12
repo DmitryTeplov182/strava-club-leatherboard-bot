@@ -57,7 +57,7 @@ services:
     env_file:
       - ./envs/batumi.env
 
-  erevan_bot:
+  batumi_bot:
     <<: *common-settings
     container_name: batumi_bot
     command: python tg.py
