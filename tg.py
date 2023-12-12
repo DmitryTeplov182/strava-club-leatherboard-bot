@@ -8,11 +8,12 @@ def parse_value(value):
         if value == '--':
             return 0
 
-        number = ''.join(filter(lambda x: x.isdigit() or x == '.', value.replace(',', '.')))
+        number = ''.join(filter(lambda x: x.isdigit(), value.replace(' m', '').replace(',', '')))
         return float(number)
     except Exception as e:
         print(f"Error in parse_value: {e}")
         raise
+
 
 def get_top_athletes(filename, metric):
     try:
