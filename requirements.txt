@@ -1,0 +1,7 @@
+apscheduler==3.10.4
+Babel==2.13.1
+environs==9.5.0
+pyTelegramBotAPI==4.14.0
+Requests==2.31.0
+selenium==4.16.0
+telebot
