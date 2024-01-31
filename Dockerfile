@@ -1,11 +1,24 @@
-FROM python:3.11-slim
+ARG PYTHON_VERSION=3.12.2
+FROM python:${PYTHON_VERSION}-slim as base
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+WORKDIR /app
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
 
-WORKDIR /usr/src/app
+    RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    python -m pip install -r requirements.txt
 
-COPY . /usr/src/app
-COPY requirements.txt ./
+USER appuser
 
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-ENV DRIVER_FROM_DOCKER=True
+CMD python tg.py

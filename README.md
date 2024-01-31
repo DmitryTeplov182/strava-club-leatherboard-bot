@@ -8,26 +8,24 @@ A Python project for scraping data from Strava club leaderboards using Selenium.
 - [License](#license)
 
 ## Introduction
-* Based on https://github.com/sergbondckua/strava_club_last_week_leaderboard
 
-* This Python code allows you to scrape data from Strava club leaderboards, providing information about club members, such as rank, distance. It uses [Selenium](https://www.selenium.dev/) to automate interactions with the [Strava](https://www.strava.com/) website.
+* This Python code allows you to scrape data from Strava club leaderboards, providing information about club members, such as rank, distance. 
 
-* Scraped data send to users via telegram bot. [Inline](https://core.telegram.org/api/bots/inline) and classic 
+* Data send to users via telegram bot. [Inline](https://core.telegram.org/api/bots/inline) and classic 
 
-* [![https://i.imgur.com/hPoMy52.png](https://i.imgur.com/hPoMy52.png)](https://i.imgur.com/hPoMy52.png)
+* [![https://i.imgur.com/U4Yvb6kl.jpg](https://i.imgur.com/U4Yvb6kl.jpg)](https://i.imgur.com/U4Yvb6kl.jpg)
 ## Installation
 1. **Clone this repository:**
 
     ```bash
-    git clone https://github.com/sergbondckua/strava_club_last_week_leaderboard.git
+    git clone https://github.com/DmitryTeplov182/strava-club-leatherboard-bot.git
     ```
-2. **Copy .env.template to .env and fill in the necessary data:**
+2. **Copy .env_dist to .env and fill in the necessary data:**
    ```bash
    cp .env_dist .env
    ```
 2. **Without Docker:**
-   1.  Copy `.env_dist` to `.env` and fill in the necessary data.
-   2. Create a [venv](https://docs.python.org/3/library/venv.html)
+   1. Create a [venv](https://docs.python.org/3/library/venv.html)
        ```bash
        cd strava-club-leatherboard-bot/
        ```
@@ -37,26 +35,21 @@ A Python project for scraping data from Strava club leaderboards using Selenium.
        ```bash
        source venv/bin/activate
        ```
-   3. Upgrade `pip`:
+   2. Upgrade `pip`:
       ```bash
        pip install --upgrade pip
       ```
-   4. Install dependencies from `requirements.txt`:
+   3. Install dependencies from `requirements.txt`:
       ```bash
       pip install -r requirements.txt
       ```
-   5. Run the project:
-      Get stats:
-      ```bash
-      python main.py 
-      ```
+   4. Run the project:
       Run bot
       ```bash
-      python main.py
+      python tg.py
       ```
 3. **Docker:**
-   1.  Copy `.env_dist` to `envs` dir and fill in the necessary data.
-   2. Edit `docker-compose.yaml` and start it.
+   1. Edit `compose.yaml` and start it.
        ```bash
        docker compose up -d
        ```

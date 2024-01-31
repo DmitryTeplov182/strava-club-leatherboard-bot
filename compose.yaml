@@ -1,0 +1,38 @@
+version: "3.4"
+
+x-common-settings: &common-settings
+  build: .
+  restart: always
+  volumes:
+    - .:/app
+
+services:
+  tbilisi_bot:
+    <<: *common-settings
+    container_name: tbilisi_bot
+    env_file:
+      - ./envs/tbilisi.env
+
+  erevan_bot:
+    <<: *common-settings
+    container_name: erevan_bot
+    env_file:
+      - ./envs/erevan.env
+
+  batumi_bot:
+    <<: *common-settings
+    container_name: batumi_bot
+    env_file:
+      - ./envs/batumi.env
+
+  morda_bot:
+    <<: *common-settings
+    container_name: morda_bot
+    env_file:
+      - ./envs/morda.env
+
+  tbigirls_bot:
+    <<: *common-settings
+    container_name: tbigirls_bot
+    env_file:
+      - ./envs/tbigirls.env
