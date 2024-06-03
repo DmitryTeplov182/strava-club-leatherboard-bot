@@ -44,7 +44,8 @@ def format_message(top_athletes, metric):
             'longest': 'Longest Ride'
         }
         message = f"Top 5 by {full_metric_names[metric]}:\n"
-        for index, athlete in enumerate(top_athletes, start=1):
+        sorted_athletes = sorted(top_athletes, key=lambda x: x[metric], reverse=True)[:5]
+        for index, athlete in enumerate(sorted_athletes, start=1):
             name = f"[{athlete['athlete_firstname']} {athlete['athlete_lastname']}]({athlete_profile_url(athlete['athlete_id'])})"
             if metric == 'distance' or metric == 'longest':
                 value = f"{athlete[metric] / 1000:.2f} km"
@@ -119,7 +120,7 @@ def inline_query(query):
             input_message_content=types.InputTextMessageContent(
                 format_combined_message(),
                 parse_mode='Markdown',
-                disable_web_page_preview=True  
+                disable_web_page_preview=True
             )
         )]
         bot.answer_inline_query(query.id, results)
@@ -131,9 +132,8 @@ def send_combined_message(chat_id):
     try:
         response_message = format_combined_message()
         if env.bool("IMAGE"):
-            image_path = env.str("IMAGE_PATH")
-            with open(image_path, 'rb') as image_file:
-                bot.send_photo(chat_id, image_file, caption=response_message, parse_mode='Markdown')
+            image_url = env.str("IMAGE_URL")
+            bot.send_photo(chat_id, image_url, caption=response_message, parse_mode='Markdown')
         else:
             bot.send_message(chat_id, response_message, parse_mode='Markdown', disable_web_page_preview=True)
     except Exception as e:
