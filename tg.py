@@ -41,7 +41,8 @@ def format_message(top_athletes, metric):
         full_metric_names = {
             'distance': 'Distance',
             'elev_gain': 'Elevation Gain',
-            'longest': 'Longest Ride'
+            'longest': 'Longest Ride',
+            'velocity': 'Speed'
         }
         message = f"Top 5 by {full_metric_names[metric]}:\n"
         sorted_athletes = sorted(top_athletes, key=lambda x: x[metric], reverse=True)[:5]
@@ -51,6 +52,8 @@ def format_message(top_athletes, metric):
                 value = f"{athlete[metric] / 1000:.2f} km"
             elif metric == 'elev_gain':
                 value = f"{int(athlete[metric])} m"
+            elif metric == 'velocity':
+                value = f"{athlete[metric] * 3.6:.2f} km/h"  # Конвертация скорости в км/ч
             else:
                 value = athlete[metric]
             rank_emoji = emoji[index - 1] if index <= 5 else str(index)
@@ -70,7 +73,8 @@ def format_combined_message():
         metrics = {
             'distance': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=distance',
             'elev_gain': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=elev_gain',
-            'longest': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=distance'
+            'longest': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=best_activities_distance',
+            'velocity': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=velocity'
         }
         for metric, url in metrics.items():
             top_athletes = get_top_athletes(url, metric)
@@ -90,7 +94,7 @@ def send_welcome(message):
     try:
         welcome_message = """
 Hello! I am the Strava Club Weekly Top Bot. 🚴‍♂️🏅
-Use /weektop to get the top 5 club members of the week by distance, elevation gain, and longest ride.
+Use /weektop to get the top 5 club members of the week by distance, elevation gain, longest ride, and speed.
 You can also use me in inline mode for quick access.
 
 Need help or have questions? Feel free to PM @iceflame.
