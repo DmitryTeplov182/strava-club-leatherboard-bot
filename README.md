@@ -1,4 +1,6 @@
 # Strava club - Week's Leaderboard
+
+  
 [![https://i.imgur.com/U4Yvb6kl.jpg](https://i.imgur.com/U4Yvb6kl.jpg)](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot)
 This Python script scrapes data from the Strava club leaderboard, providing information about the leaders of the previous week. The data is sent to users via a Telegram bot, supporting both [inline](https://core.telegram.org/api/bots/inline) and classic modes. Code uses Selenium to scrape data. So you need to create Strava account for it.
 
@@ -29,6 +31,5 @@ Open the `.env` file in a text editor and fill in the required information, such
 ## Disclaimer
 **DO NOT USE YOUR MAIN STRAVA ACCOUNT HERE. STRAVA CAN BAN YOU FOR SCRAPING ANY TIME**
 The author assumes no responsibility for any errors or omissions in the content of this code. The information contained in this code is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness, or timeliness. The author shall not be liable for any losses, injuries, or damages from the use of this code.
-
 ## License
 This project is licensed under the Beerware license. As long as you retain this notice, you can do whatever you want with this stuff. If we meet someday, and you think this stuff is worth it, you can buy me a beer in return.
