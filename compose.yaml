@@ -1,38 +1,19 @@
-version: "3.4"
-
-x-common-settings: &common-settings
-  build: .
-  restart: always
-  volumes:
-    - .:/app
-
 services:
-  tbilisi_bot:
-    <<: *common-settings
-    container_name: tbilisi_bot
-    env_file:
-      - ./envs/tbilisi.env
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    shm_size: 2g
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sS http://localhost:4444/status | grep '\"ready\": true'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  erevan_bot:
-    <<: *common-settings
-    container_name: erevan_bot
-    env_file:
-      - ./envs/erevan.env
-
-  batumi_bot:
-    <<: *common-settings
-    container_name: batumi_bot
-    env_file:
-      - ./envs/batumi.env
-
-  morda_bot:
-    <<: *common-settings
-    container_name: morda_bot
-    env_file:
-      - ./envs/morda.env
-
-  tbigirls_bot:
-    <<: *common-settings
-    container_name: tbigirls_bot
-    env_file:
-      - ./envs/tbigirls.env
+  strava_tg_bot:
+    image: dteplov/strava-club-leatherboard-bot:latest
+    container_name: strava_tg_bot
+    restart: always
+    depends_on:
+      selenium:
+        condition: service_healthy
