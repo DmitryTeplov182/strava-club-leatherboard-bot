@@ -21,10 +21,8 @@ Use `wget` to download the `compose.yaml` and `.env.example` files from the repo
     ```
 3. **Fill in the .env file with your data:**
 Open the `.env` file in a text editor and fill in the required information, such as your Strava login, password, Telegram bot token, and other necessary details.
-   ```bash
-   cp .env_dist .env
-   ```
-3. **Start the Docker services:**
+
+4. **Start the Docker services:**
    Run the following command to start the Docker services in detached mode.
        ```bash
        docker compose up -d
