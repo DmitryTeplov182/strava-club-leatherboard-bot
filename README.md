@@ -23,10 +23,10 @@ Use `wget` to download the `compose.yaml` and `.env.example` files from the repo
 Open the `.env` file in a text editor and fill in the required information, such as your Strava login, password, Telegram bot token, and other necessary details.
 
 4. **Start the Docker services:**  
-   Run the following command to start the Docker services in detached mode.
-       ```bash
+   Run the following command to start the Docker services in detached mode.  
+    ```bash
        docker compose up -d
-       ```
+    ```
 ## Disclaimer
 **DO NOT USE YOUR MAIN STRAVA ACCOUNT HERE. STRAVA CAN BAN YOU FOR SCRAPING ANY TIME**  
 The author assumes no responsibility for any errors or omissions in the content of this code. The information contained in this code is provided on an "as is" basis with no guarantees of completeness, accuracy, usefulness, or timeliness. The author shall not be liable for any losses, injuries, or damages from the use of this code.
