@@ -167,7 +167,7 @@ def format_combined_message():
         for metric, url in metrics.items():
             top_athletes = get_top_athletes(url, metric)
             message += format_message(top_athletes, metric) + "\n"
-        message += f"[Strava Club Link](https://www.strava.com/clubs/{club_id}) | [Donate to author](https://telegra.ph/Donaty-na-server-10-21)"
+        message += f"[Strava Club Link](https://www.strava.com/clubs/{club_id}) | [Donate To Author](https://telegra.ph/Donaty-na-server-10-21)"
         return message
     except Exception as e:
         print(f"Error in format_combined_message: {e}")
@@ -189,7 +189,7 @@ You can also use me in inline mode for quick access.
 
 Need help or have questions? Feel free to PM @iceflame.
 
-[View Source Code](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot) | [Donate to author](https://telegra.ph/Donaty-na-server-10-21)
+[View Source Code](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot) | [Donate To Author](https://telegra.ph/Donaty-na-server-10-21)
 """
         bot.reply_to(message, welcome_message, parse_mode='Markdown', disable_web_page_preview=True)
     except Exception as e:
