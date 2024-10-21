@@ -11,6 +11,8 @@ services:
   selenium:
     image: selenium/standalone-chrome
     container_name: selenium
+    ports:
+      - 4444:4444
     shm_size: 2g
     healthcheck:
       test: ["CMD-SHELL", "curl -sS http://localhost:4444/status | grep '\"ready\": true'"]
