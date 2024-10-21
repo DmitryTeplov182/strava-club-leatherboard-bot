@@ -158,6 +158,7 @@ def format_combined_message():
     try:
         message = "*Previous Week:*\n\n"
         club_id = env.str("CLUB_ID")
+        donation_link = env.str("DONATION_LINK")
         metrics = {
             'distance': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=distance',
             'elev_gain': f'https://www.strava.com/clubs/{club_id}/leaderboard?week_offset=1&per_page=5&sort_by=elev_gain',
@@ -167,7 +168,7 @@ def format_combined_message():
         for metric, url in metrics.items():
             top_athletes = get_top_athletes(url, metric)
             message += format_message(top_athletes, metric) + "\n"
-        message += f"[Strava Club Link](https://www.strava.com/clubs/{club_id}) | [Donate To Author](https://telegra.ph/Donaty-na-server-10-21)"
+        message += f"🚴[Strava Club Link](https://www.strava.com/clubs/{club_id}) | 🍻[Donate To Author]({donation_link})"
         return message
     except Exception as e:
         print(f"Error in format_combined_message: {e}")
