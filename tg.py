@@ -7,39 +7,40 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import time
 from threading import Thread
 from environs import Env
-from selenium import webdriver
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from cachetools import TTLCache, cached
 from selenium.common.exceptions import TimeoutException
 
-# Load environment variables
+
 env = Env()
 env.read_env()
+os.environ['DISPLAY'] = ':99'
 
-# Cache configuration for top athletes data
-cache = TTLCache(maxsize=100, ttl=5 * 60 * 60)  # 5 hours
+cache = TTLCache(maxsize=100, ttl=5 * 60 * 60)  # 5 часов
 
-# Function to set up Selenium WebDriver with logging enabled
+
 def selenium_webdriver():
-    options = webdriver.ChromeOptions()
-    #options.add_argument('--headless=new')  # Run in headless mode
-    options.add_argument('--disable-gpu')  # Disable GPU acceleration (optional)
-    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})  # Enable browser logging
-    driver = webdriver.Remote(
-        command_executor='http://selenium:4444/wd/hub',  # Default Selenium port
-        options=options
-    )
+    options = uc.ChromeOptions()
+    #options.headless = True  
+    options.add_argument('--disable-gpu')  
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})  
+
+    driver = uc.Chrome(options=options)
     return driver
 
-# Function to authenticate with Strava and retrieve cookies
+
 def strava_authentication(strava_login, strava_password):
     driver = selenium_webdriver()
     driver.get('https://www.strava.com/login')
 
     try:
-        # Explicitly wait for login elements to be present
+
         WebDriverWait(driver, 60).until(
             EC.presence_of_element_located((By.ID, 'email'))
         )
@@ -47,40 +48,39 @@ def strava_authentication(strava_login, strava_password):
             EC.presence_of_element_located((By.ID, 'password'))
         )
 
-        # Enter credentials
+
         driver.find_element(By.ID, 'email').send_keys(strava_login)
         driver.find_element(By.ID, 'password').send_keys(strava_password)
 
-        # Handle cookie banner if present
+
         try:
             WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn-deny-cookie-banner'))
             ).click()
         except TimeoutException:
-            pass  # Cookie banner might not be present, so continue
+            pass  
 
-        # Click the login button
+
         driver.find_element(By.ID, 'login-button').click()  
 
-        # Wait for login to complete
+
         WebDriverWait(driver, 60).until(
             lambda d: d.current_url != 'https://www.strava.com/login'
         )
 
-        # Get and print cookies
         all_cookies = driver.get_cookies()
         print("Strava Cookies:")
         for cookie in all_cookies:
             print(cookie)
 
-        # Store the cookies (choose a method: file, database, etc.)
+
         with open("/tmp/strava_cookies.json", "w") as f:
             json.dump(all_cookies, f)
 
     except TimeoutException as e:
         print(f"TimeoutException: {e}")
-        print("Failed to load elements or login page in time.")
-        # Capture and print browser logs
+        print("Не удалось загрузить элементы или страницу входа вовремя.")
+        
         for entry in driver.get_log('browser'):
             print(f"{entry['level']}: {entry['message']}")
     finally:

@@ -1,40 +1,30 @@
+version: '3'
 x-common-settings: &common-settings
   build: .
   restart: always
-  depends_on:
-    selenium:
-      condition: service_healthy
   volumes:
     - .:/app
 
 services:
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: selenium
-    ports:
-      - 4444:4444
-    shm_size: 2g
-    healthcheck:
-      test: ["CMD-SHELL", "curl -sS http://localhost:4444/status | grep '\"ready\": true'"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
   morda_bot:
     <<: *common-settings
     container_name: morda_bot
     env_file:
       - ./envs/morda.env
-
+    # ports:
+    #   - "5900:5900" 
   erevan_bot:
     <<: *common-settings
     container_name: erevan_bot
     env_file:
       - ./envs/erevan.env
-
+    # ports:
+    #   - "5901:5900"  
   tbigirls_bot:
     <<: *common-settings
     container_name: tbigirls_bot
     env_file:
       - ./envs/tbigirls.env
+    # ports:
+    #   - "5902:5900"  

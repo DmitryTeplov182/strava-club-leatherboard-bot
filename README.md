@@ -5,9 +5,10 @@
   
 This Python script scrapes data from the Strava club leaderboard, providing information about the leaders of the previous week. The data is sent to users via a Telegram bot, supporting both [inline](https://core.telegram.org/api/bots/inline) and classic modes. Code uses Selenium to scrape data. So you need to create Strava account for it.  
 
+
 **DO NOT USE YOUR MAIN STRAVA ACCOUNT HERE. STRAVA CAN BAN YOU FOR SCRAPPING ANY TIME**
 
-
+Strava is constantly struggling with data parsing. Since November 6, 2024, it's been necessary to use a [undetected_chromedriver](https://github.com/ultrafunkamsterdam/undetected-chromedriver/) and Chrome inside the container with the bot. Also, a VNC server has been added to the container. If you need to use it, uncomment the lines in the docker-compose file. The password is inside the Dockerfile.
 ## Installation
 1. **Install Docker and Docker Compose:**  
 Follow the official Docker documentation to install Docker and Docker Compose on your system.

@@ -1,19 +1,7 @@
 services:
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: selenium
-    shm_size: 2g
-    healthcheck:
-      test: ["CMD-SHELL", "curl -sS http://localhost:4444/status | grep '\"ready\": true'"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
   strava_tg_bot:
     image: dteplov/strava-club-leatherboard-bot:latest
     container_name: strava_tg_bot
     restart: always
-    depends_on:
-      selenium:
-        condition: service_healthy
+    ports:
+      - "5900:5900" 

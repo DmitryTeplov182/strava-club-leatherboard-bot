@@ -1,24 +1,64 @@
-ARG PYTHON_VERSION=3.12.2
-FROM python:${PYTHON_VERSION}-slim AS base
+
+FROM python:3.11-slim
+
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV DISPLAY=:99
+
+
 WORKDIR /app
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
 
-    RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
 
-USER appuser
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    gnupg \
+    ca-certificates \
+    fonts-liberation \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libdbus-1-3 \
+    libdrm2 \
+    libgbm-dev \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libxss1 \
+    libxcb-dri3-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    xdg-utils \
+    libu2f-udev \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY . .
 
-CMD ["python", "tg.py"]
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && apt-get install -y google-chrome-stable && rm -rf /var/lib/apt/lists/*
+
+
+COPY . /app
+
+
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+
+RUN mkdir -p /root/.vnc && x11vnc -storepasswd "your_vnc_password" /root/.vnc/passwd
+
+
+EXPOSE 5900
+
+
+CMD /bin/bash -c "\
+    Xvfb :99 -screen 0 1920x1080x24 & \
+    fluxbox & \
+    x11vnc -display :99 -rfbauth /root/.vnc/passwd -forever -shared -rfbport 5900 -bg -o /var/log/x11vnc.log & \
+    python tg.py"
