@@ -42,26 +42,26 @@ def strava_authentication(strava_login, strava_password):
     try:
 
         WebDriverWait(driver, 60).until(
-            EC.presence_of_element_located((By.ID, 'email'))
+            EC.presence_of_element_located((By.ID, 'desktop-email'))
         )
         WebDriverWait(driver, 60).until(
-            EC.presence_of_element_located((By.ID, 'password'))
+            EC.presence_of_element_located((By.ID, 'desktop-current-password'))
         )
 
 
-        driver.find_element(By.ID, 'email').send_keys(strava_login)
-        driver.find_element(By.ID, 'password').send_keys(strava_password)
+        driver.find_element(By.ID, 'desktop-email').send_keys(strava_login)
+        driver.find_element(By.ID, 'desktop-current-password').send_keys(strava_password)
 
 
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn-deny-cookie-banner'))
-            ).click()
-        except TimeoutException:
-            pass  
+        # try:
+        #     WebDriverWait(driver, 10).until(
+        #         EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn-deny-cookie-banner'))
+        #     ).click()
+        # except TimeoutException:
+        #     pass  
 
 
-        driver.find_element(By.ID, 'login-button').click()  
+        driver.find_element(By.ID, 'desktop-login-button').click()  
 
 
         WebDriverWait(driver, 60).until(
