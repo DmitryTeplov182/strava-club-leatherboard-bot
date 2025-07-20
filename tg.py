@@ -102,7 +102,7 @@ def format_combined_message():
         for metric, url in metrics.items():
             top_athletes = get_top_athletes(url, metric)
             message += format_message(top_athletes, metric) + "\n"
-        message += f"🚴[Strava Club Link](https://www.strava.com/clubs/{club_id}) | 🍻[Donate To Author]({donation_link})"
+        message += f"🚴[Strava Club Link](https://www.strava.com/clubs/{club_id}) | 🍻[Donate To Author]({donation_link}) | 🤖[Komoot To GPX Bot](https://t.me/komoot_to_gpx_bot)"
         return message
     except Exception as e:
         print(f"Error in format_combined_message: {e}")
