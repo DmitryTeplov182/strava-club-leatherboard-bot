@@ -25,7 +25,7 @@ class StravaBot:
         self.bot_token = self.env.str("BOT_TOKEN")
         self.group_id = self.env.str("GROUP_ID")
         self.club_id = self.env.str("CLUB_ID")
-        self.donation_link = self.env.str("DONATION_LINK")
+        self.komoot_link = 'https://t.me/KuracToGPX_Bot'
         
         # Initialize bot
         self.bot = telebot.TeleBot(self.bot_token)
@@ -126,7 +126,7 @@ class StravaBot:
             for metric, url in metrics.items():
                 top_athletes = self.get_top_athletes(url, metric)
                 message += self.format_message(top_athletes, metric) + "\n"
-            message += f"🚴[Strava Club Link](https://www.strava.com/clubs/{self.club_id}) | 🍻[Donate To Author]({self.donation_link})"
+            message += f"🚴[Strava Club Link](https://www.strava.com/clubs/{self.club_id}) | 🤖[Komoot To GPX Bot](https://t.me/KuracToGPX_Bot)"
             return message
         except Exception as e:
             logger.error(f"Error in format_combined_message: {e}")
@@ -166,7 +166,7 @@ You can also use me in inline mode for quick access.
 
 Need help or have questions? Feel free to PM @iceflame.
 
-[View Source Code](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot) | [Donate To Author](https://telegra.ph/Donaty-na-server-10-21)
+[View Source Code](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot) | [Komoot To GPX Bot](https://t.me/KuracToGPX_Bot))
 """
                 self.bot.reply_to(message, welcome_message, parse_mode='Markdown', disable_web_page_preview=True)
             except Exception as e:
