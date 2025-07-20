@@ -1,13 +1,7 @@
-x-common-settings: &common-settings
-  build: .
-  restart: always
-  volumes:
-    - .:/app
-    - ./tg.py:/app/tg.py
-
 services:
   club_bot:
-    <<: *common-settings
+    image: dteplov/strava-club-leatherboard-bot:latest
+    restart: always
     container_name: club_bot
     env_file:
-      - ./envs/env.env
+      - ./env.env
