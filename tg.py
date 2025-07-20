@@ -53,9 +53,11 @@ class StravaBot:
         for cookie in cookies:
             session.cookies.set(cookie["name"], cookie["value"], domain=".strava.com")
 
-    @cached(cache)
     def get_top_athletes(self, url, metric):
         """Request data from Strava and cache for 7 days"""
+        cache_key = f"{url}:{metric}"
+        if cache_key in self.cache:
+            return self.cache[cache_key]
         try:
             session = requests.Session()
             cookies = self.load_cookies()
@@ -71,7 +73,9 @@ class StravaBot:
             logger.debug(f"Full JSON response from Strava ({metric}):")
             logger.debug(json.dumps(response.json(), indent=4, ensure_ascii=False))
 
-            return response.json().get('data', [])
+            data = response.json().get('data', [])
+            self.cache[cache_key] = data
+            return data
         except Exception as e:
             logger.error(f"Error getting data from Strava: {e}")
             raise
