@@ -3,12 +3,15 @@
   
 [![https://i.imgur.com/U4Yvb6kl.jpg](https://i.imgur.com/U4Yvb6kl.jpg)](https://github.com/DmitryTeplov182/strava-club-leatherboard-bot)  
   
-This Python script scrapes data from the Strava club leaderboard, providing information about the leaders of the previous week. The data is sent to users via a Telegram bot, supporting both [inline](https://core.telegram.org/api/bots/inline) and classic modes. Code uses Selenium to scrape data. So you need to create Strava account for it.  
+This Python script scrapes data from the Strava club leaderboard, providing information about the leaders of the previous week. The data is sent to users via a Telegram bot, supporting both [inline](https://core.telegram.org/api/bots/inline) and classic modes. Code uses Strava cookies to scrape data. So you need to get Strava cookies manually.  
 
 
 **DO NOT USE YOUR MAIN STRAVA ACCOUNT HERE. STRAVA CAN BAN YOU FOR SCRAPPING ANY TIME**
 
-Strava is constantly struggling with data parsing. Since November 6, 2024, it's been necessary to use a [undetected_chromedriver](https://github.com/ultrafunkamsterdam/undetected-chromedriver/) and Chrome inside the container with the bot. Also, a VNC server has been added to the container. If you need to use it, uncomment the lines in the docker-compose file. The password is inside the Dockerfile.
+~~Strava is constantly struggling with data parsing. Since November 6, 2024, it's been necessary to use a [undetected_chromedriver](https://github.com/ultrafunkamsterdam/undetected-chromedriver/) and Chrome inside the container with the bot. Also, a VNC server has been added to the container. If you need to use it, uncomment the lines in the docker-compose file. The password is inside the Dockerfile.~~
+
+I’ve stopped fighting with Strava’s bot detection. Right now, you need to obtain cookies manually. It seems that one fresh set of cookies lasts for more than two months. If you have any ideas on how to get cookies automatically, feel free to contribute.
+
 ## Installation
 1. **Install Docker and Docker Compose:**  
 Follow the official Docker documentation to install Docker and Docker Compose on your system.

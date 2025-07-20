@@ -1,7 +1,29 @@
+x-common-settings: &common-settings
+  build: .
+  restart: always
+  volumes:
+    - .:/app
+    - ./tg.py:/app/tg.py
+
 services:
-  strava_tg_bot:
-    image: dteplov/strava-club-leatherboard-bot:latest
-    container_name: strava_tg_bot
-    restart: always
-    ports:
-      - "5900:5900" 
+
+  morda_bot:
+    <<: *common-settings
+    container_name: morda_bot
+    volumes:
+     - ./tg.py:/app/tg.py
+    env_file:
+      - ./envs/morda.env
+      - ./envs/cookies.env
+  erevan_bot:
+    <<: *common-settings
+    container_name: erevan_bot
+    env_file:
+      - ./envs/erevan.env
+      - ./envs/cookies.env
+  serbia_bot:
+    <<: *common-settings
+    container_name: serbia_bot_bot
+    env_file:
+      - ./envs/veloserbia.env
+      - ./envs/cookies.env
